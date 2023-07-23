@@ -1,28 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 
 import styles from './ImageGallery.module.css';
 
-class ImageGallery extends Component {
-  static propTypes = {
-    images: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        webformatURL: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    onImageClick: PropTypes.func.isRequired,
-  };
-
-  handleImageClick = (image) => {
-    const { onImageClick } = this.props;
+const ImageGallery = ({ images, onImageClick }) => {
+  const handleImageClick = (image) => {
     onImageClick(image);
   };
-
-  render() {
-    const { images } = this.props;
 
     return (
       <div>
@@ -32,13 +18,22 @@ class ImageGallery extends Component {
               key={image.id}
               imageData={image}
               alt={image.tags}
-              onClick={this.handleImageClick}
+              onClick={handleImageClick}
             />
           ))}
         </ul>
       </div>
     );
-  }
-}
+};
+
+  ImageGallery.propTypes = {
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        webformatURL: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    onImageClick: PropTypes.func.isRequired,
+};
 
 export default ImageGallery;
